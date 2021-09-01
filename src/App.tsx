@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import "@fontsource/roboto";
@@ -18,47 +18,57 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-require("dotenv").config({ path: ".env" });
+const callBackendAPI = async () => {
+  const response = await fetch("http://localhost:5000/express_backend");
+  const body = await response.json();
 
-const sendNodemail = (emailField: String) => {
-  var nodemailer = require("nodemailer");
+  if (response.status !== 200) {
+    throw Error(body.message);
+  }
+  return body;
+};
 
-  var transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.TEST_USER,
-      pass: process.env.TEST_PASS,
-    },
-  });
+const callSendnodemailAPI = async () => {
+  const response = await fetch("http://localhost:5000/send_email");
+  console.log(response);
+  const body = await response.text();
+  console.log("body", body);
 
-  var mailOptions = {
-    from: emailField,
-    to: "leochootest@gmail.com",
-    subject: "React MUI Nodemailer",
-    text: "That was easy!",
-  };
-
-  transporter.sendMail(mailOptions, function (error: any, info: any) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
-    }
-  });
+  if (response.status !== 200) {
+    throw Error(body);
+  }
+  return body;
 };
 
 function App() {
   const classes = useStyles();
-
   const [emailField, setEmailField] = useState("Put Your Email");
+  const [apiState, setApiState] = useState("calling...");
+  const [emailStatus, setEmailStatus] = useState("");
+
+  useEffect(() => {
+    callBackendAPI()
+      // .then((res) => setApiState({ data: res.express}:{res.express: String}))
+      .then((res) => setApiState(res.express))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className={classes.root}>
       <header className="App-header">
+        <div>{apiState}</div>
         <TextField defaultValue={emailField} color="primary"></TextField>
         <ButtonGroup variant="contained" size="large">
           <Button
-            onClick={() => sendNodemail(emailField)}
+            onClick={() => {
+              console.log("running");
+              callSendnodemailAPI()
+                .then((res) => {
+                  console.log(res);
+                  setEmailStatus(res);
+                })
+                .catch((err) => console.log(err));
+            }}
             color="primary"
             startIcon={<SendIcon />}
           >
@@ -68,6 +78,7 @@ function App() {
             DISCARD
           </Button>
         </ButtonGroup>
+        <div>{emailStatus}</div>
         <img src={logo} className="App-logo" alt="logo" />
       </header>
     </div>
