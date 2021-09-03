@@ -18,22 +18,24 @@ const sendNodemail = () => {
 
   var mailOptions = {
     from: process.env.TEST_USER,
-    to: process.env.TEST_USER,
+    to: "leochoodev@gmail.com",
     subject: "React MUI Nodemailer",
     text: "That was easy!",
   };
 
+  var message = "";
+
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
-      return { message: "Failed" };
+      message += "Error";
     } else {
       console.log("Email sent: " + info.response);
-      return { message: "OK" };
+      message += "OK";
     }
   });
 
-  return { message: "OK" };
+  return message;
 };
 
 // This displays message that the server running and listening to specified port

@@ -28,16 +28,13 @@ const callBackendAPI = async () => {
   return body;
 };
 
-const callSendnodemailAPI = async () => {
+const callSendemailAPI = async () => {
   const response = await fetch("http://localhost:5000/send_email");
-  console.log(response);
-  const body = await response.text();
-  console.log("body", body);
-
-  if (response.status !== 200) {
-    throw Error(body);
-  }
-  return body;
+  console.log("response:", response);
+  // if (response.status !== 200) {
+  //   throw Error();
+  // }
+  return response.status.toString();
 };
 
 function App() {
@@ -62,12 +59,10 @@ function App() {
           <Button
             onClick={() => {
               console.log("running");
-              callSendnodemailAPI()
-                .then((res) => {
-                  console.log(res);
-                  setEmailStatus(res);
-                })
-                .catch((err) => console.log(err));
+              callSendemailAPI().then((res) => {
+                setEmailStatus(res);
+              });
+              // .catch((err) => console.log(err));
             }}
             color="primary"
             startIcon={<SendIcon />}
@@ -78,7 +73,7 @@ function App() {
             DISCARD
           </Button>
         </ButtonGroup>
-        <div>{emailStatus}</div>
+        <div>Email Status: {emailStatus}</div>
         <img src={logo} className="App-logo" alt="logo" />
       </header>
     </div>
