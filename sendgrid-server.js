@@ -7,8 +7,8 @@ require("dotenv").config({ path: ".env" });
 
 const sendgridAPI = async () => {
   const sgMail = require("@sendgrid/mail");
-  //   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  sgMail.setApiKey(process.env.WRONG_SENDGRID_API_KEY);
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  //   sgMail.setApiKey(process.env.WRONG_SENDGRID_API_KEY);
 
   const msg = {
     to: "leochoodev@gmail.com", // Change to your recipient

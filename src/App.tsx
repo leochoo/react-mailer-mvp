@@ -31,9 +31,6 @@ const callBackendAPI = async () => {
 const callSendemailAPI = async () => {
   const response = await fetch("http://localhost:5000/send_email");
   console.log("response:", response);
-  // if (response.status !== 202) {
-  //   throw Error();
-  // }
   return response.status.toString();
 };
 
@@ -60,12 +57,12 @@ function App() {
             onClick={() => {
               console.log("running");
               callSendemailAPI().then((res) => {
-                setEmailStatus(res);
+                if (res !== "202") {
+                  setEmailStatus("Failed to send with code " + res);
+                } else {
+                  setEmailStatus(res);
+                }
               });
-              // .catch((err) => {
-              //   console.log(err);
-              //   setEmailStatus(err.status.toString());
-              // });
             }}
             color="primary"
             startIcon={<SendIcon />}
