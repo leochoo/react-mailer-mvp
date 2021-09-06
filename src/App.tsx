@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import "@fontsource/roboto";
@@ -32,7 +32,7 @@ const callBackendAPI = async () => {
   return body;
 };
 
-const callSendemailAPI = async (emailField: String) => {
+const callSendemailAPI = async (emailField?: String) => {
   try {
     const response = await axios.post("http://localhost:5000/send_email", {
       emailAddress: emailField,
@@ -52,7 +52,8 @@ const callSendemailAPI = async (emailField: String) => {
 
 function App() {
   const classes = useStyles();
-  const [emailField, setEmailField] = useState("Put Your Email");
+  // const [emailField, setEmailField] = useState("Put Your Email");
+  const emailInput = useRef<HTMLInputElement>(null);
   const [apiState, setApiState] = useState("calling...");
   const [emailStatus, setEmailStatus] = useState("");
 
@@ -67,12 +68,16 @@ function App() {
     <div className={classes.root}>
       <header className="App-header">
         <div>{apiState}</div>
-        <TextField defaultValue={emailField} color="primary"></TextField>
+        <TextField
+          inputRef={emailInput}
+          color="primary"
+          placeholder="Input Email Here"
+        ></TextField>
         <ButtonGroup variant="contained" size="large">
           <Button
             onClick={() => {
               console.log("running");
-              callSendemailAPI(emailField).then((res) => {
+              callSendemailAPI(emailInput.current?.value).then((res) => {
                 if (res !== "201") {
                   setEmailStatus("Failed to POST " + res);
                 } else {
