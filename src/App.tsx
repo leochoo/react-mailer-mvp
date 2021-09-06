@@ -6,6 +6,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { ButtonGroup, Button, FormControl, TextField } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SendIcon from "@material-ui/icons/Send";
+import axios from "axios";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,7 +30,7 @@ const callBackendAPI = async () => {
 };
 
 const callSendemailAPI = async () => {
-  const response = await fetch("http://localhost:5000/send_email");
+  const response = await axios.post("http://localhost:5000/send_email");
   console.log("response:", response);
   return response.status.toString();
 };
