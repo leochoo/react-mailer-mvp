@@ -69,10 +69,10 @@ function App() {
             onClick={() => {
               console.log("running");
               callSendemailAPI().then((res) => {
-                if (res !== "200") {
-                  setEmailStatus("Failed to send with code " + res);
+                if (res !== "201") {
+                  setEmailStatus("Failed to POST " + res);
                 } else {
-                  setEmailStatus(res);
+                  setEmailStatus("SENT! Post successful " + res);
                 }
               });
             }}
