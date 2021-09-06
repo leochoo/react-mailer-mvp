@@ -6,7 +6,8 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { ButtonGroup, Button, FormControl, TextField } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SendIcon from "@material-ui/icons/Send";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { ErrorRounded } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,9 +31,19 @@ const callBackendAPI = async () => {
 };
 
 const callSendemailAPI = async () => {
-  const response = await axios.post("http://localhost:5000/send_email");
-  console.log("response:", response);
-  return response.status.toString();
+  try {
+    const response = await axios.post("http://localhost:5000/send_email");
+    console.log("response:", response);
+    return response.status.toString();
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      console.log("err:", err);
+      console.log("err response:", err.response);
+      if (err.response) {
+        return err.response.status.toString();
+      }
+    }
+  }
 };
 
 function App() {
@@ -58,7 +69,7 @@ function App() {
             onClick={() => {
               console.log("running");
               callSendemailAPI().then((res) => {
-                if (res !== "202") {
+                if (res !== "200") {
                   setEmailStatus("Failed to send with code " + res);
                 } else {
                   setEmailStatus(res);
