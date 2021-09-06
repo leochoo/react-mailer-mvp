@@ -17,20 +17,11 @@ const useStyles = makeStyles((theme: Theme) =>
         width: "25ch",
       },
     },
+    input: {
+      color: "#FFFFFF",
+    },
   })
 );
-
-const callBackendAPI = async () => {
-  // this is only used for Express server in this project.
-  // I implemented NetJS server instead now
-  const response = await fetch("http://localhost:5000/express_backend");
-  const body = await response.json();
-
-  if (response.status !== 200) {
-    throw Error(body.message);
-  }
-  return body;
-};
 
 const callSendemailAPI = async (emailField?: String) => {
   try {
@@ -54,24 +45,21 @@ function App() {
   const classes = useStyles();
   // const [emailField, setEmailField] = useState("Put Your Email");
   const emailInput = useRef<HTMLInputElement>(null);
-  const [apiState, setApiState] = useState("calling...");
   const [emailStatus, setEmailStatus] = useState("");
 
-  useEffect(() => {
-    callBackendAPI()
-      // .then((res) => setApiState({ data: res.express}:{res.express: String}))
-      .then((res) => setApiState(res.express))
-      .catch((err) => console.log(err));
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div className={classes.root}>
       <header className="App-header">
-        <div>{apiState}</div>
+        <div>Send Email!</div>
         <TextField
           inputRef={emailInput}
           color="primary"
           placeholder="Input Email Here"
+          InputProps={{
+            className: classes.input,
+          }}
         ></TextField>
         <ButtonGroup variant="contained" size="large">
           <Button
