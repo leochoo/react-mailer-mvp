@@ -21,6 +21,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const callBackendAPI = async () => {
+  // this is only used for Express server in this project.
+  // I implemented NetJS server instead now
   const response = await fetch("http://localhost:5000/express_backend");
   const body = await response.json();
 
@@ -30,9 +32,11 @@ const callBackendAPI = async () => {
   return body;
 };
 
-const callSendemailAPI = async () => {
+const callSendemailAPI = async (emailField: String) => {
   try {
-    const response = await axios.post("http://localhost:5000/send_email");
+    const response = await axios.post("http://localhost:5000/send_email", {
+      emailAddress: emailField,
+    });
     console.log("response:", response);
     return response.status.toString();
   } catch (err) {
@@ -68,7 +72,7 @@ function App() {
           <Button
             onClick={() => {
               console.log("running");
-              callSendemailAPI().then((res) => {
+              callSendemailAPI(emailField).then((res) => {
                 if (res !== "201") {
                   setEmailStatus("Failed to POST " + res);
                 } else {
