@@ -11,6 +11,10 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Grid,
+  Card,
+  CardContent,
+  Typography,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SendIcon from "@material-ui/icons/Send";
@@ -21,8 +25,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       "& .MuiTextField-root": {
-        margin: theme.spacing(3),
-        width: "25ch",
+        // margin: theme.spacing(3),
+        // width: "25ch",
       },
     },
     input: {
@@ -70,7 +74,91 @@ function App() {
   return (
     <div className={classes.root}>
       <body className="App-body">
-        <div>Interview Email System</div>
+        <Typography gutterBottom variant="h3" align="center">
+          Interview Email System
+        </Typography>
+        <Grid>
+          <Card style={{ padding: "20px 5px", margin: "0 auto" }}>
+            <CardContent>
+              <Typography gutterBottom variant="h5">
+                Contact Us
+              </Typography>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                gutterBottom
+              >
+                Fill up the form and our team will get back to you within 24
+                hours.
+              </Typography>
+              <form>
+                <Grid container spacing={1}>
+                  <Grid xs={12} sm={6} md={6} item>
+                    <TextField
+                      placeholder="Enter first name"
+                      label="First Name"
+                      variant="outlined"
+                      fullWidth
+                      required
+                    />
+                  </Grid>
+                  <Grid xs={12} sm={6} md={6} item>
+                    <TextField
+                      placeholder="Enter last name"
+                      label="Last Name"
+                      variant="outlined"
+                      fullWidth
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      type="email"
+                      placeholder="Enter email"
+                      label="Email"
+                      variant="outlined"
+                      fullWidth
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      type="number"
+                      placeholder="Enter phone number"
+                      label="Phone"
+                      variant="outlined"
+                      fullWidth
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Message"
+                      multiline
+                      rows={4}
+                      placeholder="Type your message here"
+                      variant="outlined"
+                      fullWidth
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                    >
+                      Submit
+                    </Button>
+                  </Grid>
+                </Grid>
+              </form>
+            </CardContent>
+          </Card>
+        </Grid>
+
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel id="sender-inputlabel-id">FROM</InputLabel>
           <Select
