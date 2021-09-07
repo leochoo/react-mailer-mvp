@@ -3,7 +3,15 @@ import logo from "./logo.svg";
 import "./App.css";
 import "@fontsource/roboto";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { ButtonGroup, Button, FormControl, TextField } from "@material-ui/core";
+import {
+  ButtonGroup,
+  Button,
+  FormControl,
+  TextField,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SendIcon from "@material-ui/icons/Send";
 import axios, { AxiosError } from "axios";
@@ -19,6 +27,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     input: {
       color: "#FFFFFF",
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      width: "100%",
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
     },
   })
 );
@@ -44,23 +59,91 @@ const callSendemailAPI = async (emailField?: String) => {
 function App() {
   const classes = useStyles();
   // const [emailField, setEmailField] = useState("Put Your Email");
+  const nameInput = useRef<HTMLInputElement>(null);
   const emailInput = useRef<HTMLInputElement>(null);
+  const messageInput = useRef<HTMLInputElement>(null);
+
   const [emailStatus, setEmailStatus] = useState("");
 
   useEffect(() => {}, []);
 
   return (
     <div className={classes.root}>
-      <header className="App-header">
-        <div>Send Email!</div>
+      <body className="App-body">
+        <div>Interview Email System</div>
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel id="sender-inputlabel-id">FROM</InputLabel>
+          <Select
+            labelId="sender-inputlabel-id"
+            id="sender-select-id"
+            label="sender-select-label"
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={10}>sender-1</MenuItem>
+            <MenuItem value={20}>sender-2</MenuItem>
+            <MenuItem value={30}>sender-3</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel id="template-inputlabel-id">Template</InputLabel>
+          <Select
+            labelId="template-inputlabel-id"
+            id="template-select-id"
+            label="template-select-label"
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={10}>template-1</MenuItem>
+            <MenuItem value={20}>template-2</MenuItem>
+            <MenuItem value={30}>template-3</MenuItem>
+          </Select>
+        </FormControl>
         <TextField
-          inputRef={emailInput}
+          inputRef={nameInput}
           color="primary"
-          placeholder="Input Email Here"
+          label="Applicant Name"
+          placeholder="Name"
           InputProps={{
             className: classes.input,
           }}
+          variant="outlined"
         ></TextField>
+        <TextField
+          inputRef={nameInput}
+          color="primary"
+          label="UUID"
+          placeholder="UUID"
+          InputProps={{
+            className: classes.input,
+          }}
+          variant="outlined"
+        ></TextField>
+        <TextField
+          inputRef={emailInput}
+          color="primary"
+          label="TO"
+          defaultValue="Email"
+          InputProps={{
+            className: classes.input,
+          }}
+          variant="outlined"
+        ></TextField>
+        <TextField
+          inputRef={messageInput}
+          color="primary"
+          placeholder="Message"
+          multiline
+          rows={14}
+          InputProps={{
+            className: classes.input,
+          }}
+          variant="outlined"
+        ></TextField>
+
         <ButtonGroup variant="contained" size="large">
           <Button
             onClick={() => {
@@ -83,8 +166,9 @@ function App() {
           </Button>
         </ButtonGroup>
         <div>Email Status: {emailStatus}</div>
+
         <img src={logo} className="App-logo" alt="logo" />
-      </header>
+      </body>
     </div>
   );
 }
