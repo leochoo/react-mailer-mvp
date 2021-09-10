@@ -143,60 +143,44 @@ function App() {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid xs={12} sm={6} md={6} item>
-                  <TextField
-                    inputRef={nameInput}
-                    color="primary"
-                    label="Applicant Name"
-                    placeholder="Applicant Name"
-                    InputProps={{
-                      className: classes.input,
-                    }}
-                    variant="outlined"
-                    fullWidth
-                  ></TextField>
-                </Grid>
+                <Grid
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  container
+                  item
+                  spacing={1}
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="stretch"
+                >
+                  <Grid xs={12} sm={6} md={6} item>
+                    <TextField
+                      inputRef={nameInput}
+                      color="primary"
+                      label="Applicant Name"
+                      placeholder="Applicant Name"
+                      InputProps={{
+                        className: classes.input,
+                      }}
+                      variant="outlined"
+                      fullWidth
+                    ></TextField>
+                  </Grid>
 
-                <Grid xs={12} sm={6} md={6} item>
-                  {" "}
-                  <TextField
-                    inputRef={emailInput}
-                    color="primary"
-                    label="Applicant Email"
-                    InputProps={{
-                      className: classes.input,
-                    }}
-                    variant="outlined"
-                    fullWidth
-                  ></TextField>
-                </Grid>
-                <Grid xs={12} item>
-                  {" "}
-                  <TextField
-                    inputRef={subjectInput}
-                    color="primary"
-                    label="Subject"
-                    InputProps={{
-                      className: classes.input,
-                    }}
-                    variant="outlined"
-                    fullWidth
-                  ></TextField>
-                </Grid>
-                <Grid xs={12} sm={12} md={12} item>
-                  {" "}
-                  <TextField
-                    inputRef={messageInput}
-                    color="primary"
-                    label="Message"
-                    multiline
-                    rows={14}
-                    InputProps={{
-                      className: classes.input,
-                    }}
-                    variant="outlined"
-                    fullWidth
-                  ></TextField>
+                  <Grid xs={12} sm={6} md={6} item>
+                    {" "}
+                    <TextField
+                      inputRef={emailInput}
+                      color="primary"
+                      label="Applicant Email"
+                      InputProps={{
+                        className: classes.input,
+                      }}
+                      variant="outlined"
+                      fullWidth
+                    ></TextField>
+                  </Grid>
                 </Grid>
               </Grid>
             </CardContent>
