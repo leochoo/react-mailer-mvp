@@ -81,7 +81,7 @@ function App() {
 
   useEffect(() => {}, []);
 
-  function FormRow() {
+  function ApplicantRow() {
     return (
       <React.Fragment>
         <Grid xs={12} sm={6} md={6} item>
@@ -188,7 +188,8 @@ function App() {
                   justifyContent="space-between"
                   alignItems="stretch"
                 >
-                  <FormRow />
+                  {/* TODO: Need to dynamically generate this on a need basis */}
+                  <ApplicantRow />
                 </Grid>
               </Grid>
             </CardContent>
