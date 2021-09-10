@@ -42,10 +42,18 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const callSendemailAPI = async (emailField?: String) => {
+const callSendemailAPI = async (
+  emailField?: String,
+  nameField?: String,
+  subjectField?: String,
+  messageField?: String
+) => {
   try {
     const response = await axios.post("http://localhost:5000/send_email", {
       emailAddress: emailField,
+      name: nameField,
+      subject: subjectField,
+      message: messageField,
     });
     console.log("response:", response);
     return response.status.toString();
@@ -63,10 +71,10 @@ const callSendemailAPI = async (emailField?: String) => {
 function App() {
   const classes = useStyles();
   // const [emailField, setEmailField] = useState("Put Your Email");
+  // const fromInput = useRef<HTMLInputElement>(null);
   const nameInput = useRef<HTMLInputElement>(null);
   const emailInput = useRef<HTMLInputElement>(null);
   const subjectInput = useRef<HTMLInputElement>(null);
-
   const messageInput = useRef<HTMLInputElement>(null);
 
   const [emailStatus, setEmailStatus] = useState("");
@@ -110,7 +118,9 @@ function App() {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      <MenuItem value={10}>sender-1</MenuItem>
+                      <MenuItem value={"leochootest@gmail.com"}>
+                        leochootest@gmail.com
+                      </MenuItem>
                       <MenuItem value={20}>sender-2</MenuItem>
                       <MenuItem value={30}>sender-3</MenuItem>
                     </Select>
@@ -133,7 +143,9 @@ function App() {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      <MenuItem value={10}>template-1</MenuItem>
+                      <MenuItem value={"d-43903e12c5a241959a1f60bb52564a59"}>
+                        d-43903e12c5a241959a1f60bb52564a59
+                      </MenuItem>
                       <MenuItem value={20}>template-2</MenuItem>
                       <MenuItem value={30}>template-3</MenuItem>
                     </Select>
@@ -203,7 +215,12 @@ function App() {
           <Button
             onClick={() => {
               console.log("running");
-              callSendemailAPI(emailInput.current?.value).then((res) => {
+              callSendemailAPI(
+                emailInput.current?.value,
+                nameInput.current?.value,
+                subjectInput.current?.value,
+                messageInput.current?.value
+              ).then((res) => {
                 if (res !== "201") {
                   setEmailStatus("Failed to POST " + res);
                 } else {
