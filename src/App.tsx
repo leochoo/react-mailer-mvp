@@ -114,15 +114,11 @@ function App() {
                       labelId="sender-inputlabel-id"
                       id="sender-select-id"
                       label="sender-select-label"
+                      defaultValue={"leochootest@gmail.com"}
                     >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
                       <MenuItem value={"leochootest@gmail.com"}>
                         leochootest@gmail.com
                       </MenuItem>
-                      <MenuItem value={20}>sender-2</MenuItem>
-                      <MenuItem value={30}>sender-3</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -139,15 +135,11 @@ function App() {
                       labelId="template-inputlabel-id"
                       id="template-select-id"
                       label="template-select-label"
+                      defaultValue={"d-43903e12c5a241959a1f60bb52564a59"}
                     >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
                       <MenuItem value={"d-43903e12c5a241959a1f60bb52564a59"}>
-                        d-43903e12c5a241959a1f60bb52564a59
+                        Test Template
                       </MenuItem>
-                      <MenuItem value={20}>template-2</MenuItem>
-                      <MenuItem value={30}>template-3</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
