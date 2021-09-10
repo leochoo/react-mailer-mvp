@@ -154,7 +154,7 @@ function App() {
                   justifyContent="space-between"
                   alignItems="stretch"
                 >
-                  <Grid xs={12} sm={6} md={6}} item>
+                  <Grid xs={12} sm={6} md={6} item>
                     <TextField
                       inputRef={nameInput}
                       color="primary"
