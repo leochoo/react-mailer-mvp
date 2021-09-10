@@ -81,6 +81,40 @@ function App() {
 
   useEffect(() => {}, []);
 
+  function FormRow() {
+    return (
+      <React.Fragment>
+        <Grid xs={12} sm={6} md={6} item>
+          <TextField
+            inputRef={nameInput}
+            color="primary"
+            label="Applicant Name"
+            placeholder="Applicant Name"
+            InputProps={{
+              className: classes.input,
+            }}
+            variant="outlined"
+            fullWidth
+          ></TextField>
+        </Grid>
+
+        <Grid xs={12} sm={6} md={6} item>
+          {" "}
+          <TextField
+            inputRef={emailInput}
+            color="primary"
+            label="Applicant Email"
+            InputProps={{
+              className: classes.input,
+            }}
+            variant="outlined"
+            fullWidth
+          ></TextField>
+        </Grid>
+      </React.Fragment>
+    );
+  }
+
   return (
     <div className={classes.root}>
       <body className="App-body">
@@ -154,33 +188,7 @@ function App() {
                   justifyContent="space-between"
                   alignItems="stretch"
                 >
-                  <Grid xs={12} sm={6} md={6} item>
-                    <TextField
-                      inputRef={nameInput}
-                      color="primary"
-                      label="Applicant Name"
-                      placeholder="Applicant Name"
-                      InputProps={{
-                        className: classes.input,
-                      }}
-                      variant="outlined"
-                      fullWidth
-                    ></TextField>
-                  </Grid>
-
-                  <Grid xs={12} sm={6} md={6} item>
-                    {" "}
-                    <TextField
-                      inputRef={emailInput}
-                      color="primary"
-                      label="Applicant Email"
-                      InputProps={{
-                        className: classes.input,
-                      }}
-                      variant="outlined"
-                      fullWidth
-                    ></TextField>
-                  </Grid>
+                  <FormRow />
                 </Grid>
               </Grid>
             </CardContent>
