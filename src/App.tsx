@@ -18,8 +18,7 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SendIcon from "@material-ui/icons/Send";
-import axios, { AxiosError } from "axios";
-import { ErrorRounded } from "@material-ui/icons";
+import axios from "axios";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,18 +41,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const callSendemailAPI = async (
-  emailField?: String,
-  nameField?: String,
-  subjectField?: String,
-  messageField?: String
-) => {
+const callSendemailAPI = async (emailField?: String, nameField?: String) => {
   try {
     const response = await axios.post("http://localhost:5000/send_email", {
       emailAddress: emailField,
       name: nameField,
-      subject: subjectField,
-      message: messageField,
     });
     console.log("response:", response);
     return response.status.toString();
@@ -70,12 +62,8 @@ const callSendemailAPI = async (
 
 function App() {
   const classes = useStyles();
-  // const [emailField, setEmailField] = useState("Put Your Email");
-  // const fromInput = useRef<HTMLInputElement>(null);
   const nameInput = useRef<HTMLInputElement>(null);
   const emailInput = useRef<HTMLInputElement>(null);
-  const subjectInput = useRef<HTMLInputElement>(null);
-  const messageInput = useRef<HTMLInputElement>(null);
 
   const [emailStatus, setEmailStatus] = useState("");
 
@@ -169,10 +157,10 @@ function App() {
                       labelId="template-inputlabel-id"
                       id="template-select-id"
                       label="template-select-label"
-                      defaultValue={"d-43903e12c5a241959a1f60bb52564a59"}
+                      defaultValue={"d-c606695e3a4f430d9755b3fb5b4801bc"}
                     >
-                      <MenuItem value={"d-43903e12c5a241959a1f60bb52564a59"}>
-                        Test Template
+                      <MenuItem value={"d-c606695e3a4f430d9755b3fb5b4801bc"}>
+                        Wings Interview Intivation Email
                       </MenuItem>
                     </Select>
                   </FormControl>
@@ -202,9 +190,7 @@ function App() {
               console.log("running");
               callSendemailAPI(
                 emailInput.current?.value,
-                nameInput.current?.value,
-                subjectInput.current?.value,
-                messageInput.current?.value
+                nameInput.current?.value
               ).then((res) => {
                 if (res !== "201") {
                   setEmailStatus("Failed to POST " + res);
