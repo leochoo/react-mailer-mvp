@@ -18,7 +18,8 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SendIcon from "@material-ui/icons/Send";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { ErrorRounded } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,11 +42,16 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const callSendemailAPI = async (emailField?: String, nameField?: String) => {
+const callSendemailAPI = async (
+  emailField?: String,
+  nameField?: String,
+  templateId?: String
+) => {
   try {
     const response = await axios.post("http://localhost:5000/send_email", {
       emailAddress: emailField,
       name: nameField,
+      templateId: templateId,
     });
     console.log("response:", response);
     return response.status.toString();
@@ -60,12 +66,23 @@ const callSendemailAPI = async (emailField?: String, nameField?: String) => {
   }
 };
 
+// set handlechange event value to templateID state
+
 function App() {
   const classes = useStyles();
+  // const [emailField, setEmailField] = useState("Put Your Email");
+  // const fromInput = useRef<HTMLInputElement>(null);
   const nameInput = useRef<HTMLInputElement>(null);
   const emailInput = useRef<HTMLInputElement>(null);
-
+  const templateIdInput = useRef<HTMLInputElement>(null);
+  const [templateId, setTemplateId] = useState<String>("");
+  console.log("first render templateId:", templateId);
   const [emailStatus, setEmailStatus] = useState("");
+
+  const handleChange = (event: any) => {
+    console.log("handleChange templateId:", templateId);
+    setTemplateId(event.target.value as string);
+  };
 
   useEffect(() => {}, []);
 
@@ -158,9 +175,11 @@ function App() {
                       id="template-select-id"
                       label="template-select-label"
                       defaultValue={"d-c606695e3a4f430d9755b3fb5b4801bc"}
+                      // onChange={handleChange}
+                      inputRef={templateIdInput}
                     >
                       <MenuItem value={"d-c606695e3a4f430d9755b3fb5b4801bc"}>
-                        Wings Interview Intivation Email
+                        Wings Template
                       </MenuItem>
                     </Select>
                   </FormControl>
@@ -190,7 +209,8 @@ function App() {
               console.log("running");
               callSendemailAPI(
                 emailInput.current?.value,
-                nameInput.current?.value
+                nameInput.current?.value,
+                templateId
               ).then((res) => {
                 if (res !== "201") {
                   setEmailStatus("Failed to POST " + res);
