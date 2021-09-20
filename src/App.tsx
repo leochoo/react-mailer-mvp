@@ -66,22 +66,20 @@ const callSendemailAPI = async (
   }
 };
 
-// set handlechange event value to templateID state
-
 function App() {
   const classes = useStyles();
   // const [emailField, setEmailField] = useState("Put Your Email");
   // const fromInput = useRef<HTMLInputElement>(null);
   const nameInput = useRef<HTMLInputElement>(null);
   const emailInput = useRef<HTMLInputElement>(null);
-  const templateIdInput = useRef<HTMLInputElement>(null);
   const [templateId, setTemplateId] = useState<String>("");
   console.log("first render templateId:", templateId);
   const [emailStatus, setEmailStatus] = useState("");
 
-  const handleChange = (event: any) => {
-    console.log("handleChange templateId:", templateId);
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    console.log("before setting templateId:", templateId);
     setTemplateId(event.target.value as string);
+    console.log("after setting templateId:", templateId);
   };
 
   useEffect(() => {}, []);
@@ -174,9 +172,7 @@ function App() {
                       labelId="template-inputlabel-id"
                       id="template-select-id"
                       label="template-select-label"
-                      defaultValue={"d-c606695e3a4f430d9755b3fb5b4801bc"}
-                      // onChange={handleChange}
-                      inputRef={templateIdInput}
+                      onChange={handleChange}
                     >
                       <MenuItem value={"d-c606695e3a4f430d9755b3fb5b4801bc"}>
                         Wings Template
