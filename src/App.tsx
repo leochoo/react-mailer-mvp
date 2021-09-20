@@ -105,7 +105,7 @@ function App() {
 
   return (
     <div className={classes.root}>
-      <body className="App-body">
+      <div className="App-body">
         <Typography gutterBottom variant="h3" align="center">
           Interview Email System
         </Typography>
@@ -211,7 +211,7 @@ function App() {
         <div>Email Status: {emailStatus}</div>
 
         <img src={logo} className="App-logo" alt="logo" />
-      </body>
+      </div>
     </div>
   );
 }
