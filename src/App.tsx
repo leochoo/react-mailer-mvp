@@ -72,6 +72,8 @@ function App() {
   // const fromInput = useRef<HTMLInputElement>(null);
   const nameInput = useRef<HTMLInputElement>(null);
   const emailInput = useRef<HTMLInputElement>(null);
+  const templateIdInput = useRef<HTMLInputElement>(null);
+
   const [templateId, setTemplateId] = useState<String>("");
   console.log("first render templateId:", templateId);
   const [emailStatus, setEmailStatus] = useState("");
@@ -169,10 +171,11 @@ function App() {
                       Template
                     </InputLabel>
                     <Select
+                      inputRef={templateIdInput}
                       labelId="template-inputlabel-id"
                       id="template-select-id"
                       label="template-select-label"
-                      onChange={handleChange}
+                      // onChange={handleChange}
                     >
                       <MenuItem value={"d-c606695e3a4f430d9755b3fb5b4801bc"}>
                         Wings Template
@@ -203,10 +206,12 @@ function App() {
           <Button
             onClick={() => {
               console.log("running");
+              console.log("tempalteIdInput", templateIdInput.current?.value);
               callSendemailAPI(
                 emailInput.current?.value,
                 nameInput.current?.value,
-                templateId
+                // templateId,
+                templateIdInput.current?.value
               ).then((res) => {
                 if (res !== "201") {
                   setEmailStatus("Failed to POST " + res);
