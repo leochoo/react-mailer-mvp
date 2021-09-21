@@ -72,16 +72,14 @@ function App() {
   // const fromInput = useRef<HTMLInputElement>(null);
   const nameInput = useRef<HTMLInputElement>(null);
   const emailInput = useRef<HTMLInputElement>(null);
-  const templateIdInput = useRef<HTMLInputElement>(null);
+  // const templateIdInput = useRef<HTMLInputElement>(null);
 
   const [templateId, setTemplateId] = useState<String>("");
   console.log("first render templateId:", templateId);
   const [emailStatus, setEmailStatus] = useState("");
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    console.log("before setting templateId:", templateId);
     setTemplateId(event.target.value as string);
-    console.log("after setting templateId:", templateId);
   };
 
   useEffect(() => {}, []);
@@ -121,118 +119,92 @@ function App() {
   }
 
   return (
-    <div className={classes.root}>
-      <div className="App-body">
-        <Typography gutterBottom variant="h3" align="center">
-          Interview Email System
-        </Typography>
-        <Grid>
-          <Card style={{ padding: "20px 5px", margin: "0 auto" }}>
-            <CardContent>
-              <Typography gutterBottom variant="h5">
-                Contact Us
-              </Typography>
-              <Typography
-                variant="body2"
-                color="textSecondary"
-                component="p"
-                gutterBottom
-              >
-                Fill up the form and our team will get back to you within 24
-                hours.
-              </Typography>
-              <Grid container spacing={1}>
-                <Grid xs={12} item>
-                  <FormControl
-                    variant="outlined"
-                    className={classes.formControl}
-                    fullWidth
+    <div className="App-body">
+      <Typography gutterBottom variant="h3" align="center">
+        Interview Email System
+      </Typography>
+      <Grid>
+        <Card style={{ padding: "20px 5px", margin: "0 auto" }}>
+          <CardContent>
+            <Grid container spacing={1}>
+              <Grid xs={12} item>
+                <FormControl variant="outlined" fullWidth>
+                  <InputLabel id="sender-inputlabel-id">FROM</InputLabel>
+                  <Select
+                    labelId="sender-inputlabel-id"
+                    id="sender-select-id"
+                    label="sender-select-label"
+                    defaultValue={"leochootest@gmail.com"}
                   >
-                    <InputLabel id="sender-inputlabel-id">FROM</InputLabel>
-                    <Select
-                      labelId="sender-inputlabel-id"
-                      id="sender-select-id"
-                      label="sender-select-label"
-                      defaultValue={"leochootest@gmail.com"}
-                    >
-                      <MenuItem value={"leochootest@gmail.com"}>
-                        leochootest@gmail.com
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid xs={12} item>
-                  <FormControl
-                    variant="outlined"
-                    className={classes.formControl}
-                    fullWidth
-                  >
-                    <InputLabel id="template-inputlabel-id">
-                      Template
-                    </InputLabel>
-                    <Select
-                      inputRef={templateIdInput}
-                      labelId="template-inputlabel-id"
-                      id="template-select-id"
-                      label="template-select-label"
-                      // onChange={handleChange}
-                    >
-                      <MenuItem value={"d-c606695e3a4f430d9755b3fb5b4801bc"}>
-                        Wings Template
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid
-                  xs={12}
-                  sm={12}
-                  md={12}
-                  container
-                  item
-                  // spacing={1}
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="stretch"
-                >
-                  {/* TODO: Need to dynamically generate this on a need basis */}
-                  <ApplicantRow />
-                </Grid>
+                    <MenuItem value={"leochootest@gmail.com"}>
+                      leochootest@gmail.com
+                    </MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
-            </CardContent>
-          </Card>
-        </Grid>
+              <Grid xs={12} item>
+                <FormControl variant="outlined" fullWidth>
+                  <InputLabel id="template-inputlabel-id">Template</InputLabel>
+                  <Select
+                    // inputRef={templateIdInput}
+                    labelId="template-inputlabel-id"
+                    id="template-select-id"
+                    label="template-select-label"
+                    onChange={handleChange}
+                  >
+                    <MenuItem value={"d-c606695e3a4f430d9755b3fb5b4801bc"}>
+                      Wings Template
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid
+                xs={12}
+                sm={12}
+                md={12}
+                container
+                item
+                // spacing={1}
+                direction="row"
+                justifyContent="space-between"
+                alignItems="stretch"
+              >
+                {/* TODO: Need to dynamically generate this on a need basis */}
+                <ApplicantRow />
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+      </Grid>
 
-        <ButtonGroup variant="contained" size="large">
-          <Button
-            onClick={() => {
-              console.log("running");
-              console.log("tempalteIdInput", templateIdInput.current?.value);
-              callSendemailAPI(
-                emailInput.current?.value,
-                nameInput.current?.value,
-                // templateId,
-                templateIdInput.current?.value
-              ).then((res) => {
-                if (res !== "201") {
-                  setEmailStatus("Failed to POST " + res);
-                } else {
-                  setEmailStatus("SENT! Post successful " + res);
-                }
-              });
-            }}
-            color="primary"
-            startIcon={<SendIcon />}
-          >
-            SEND
-          </Button>
-          <Button color="secondary" startIcon={<DeleteIcon />}>
-            DISCARD
-          </Button>
-        </ButtonGroup>
-        <div>Email Status: {emailStatus}</div>
-
-        <img src={logo} className="App-logo" alt="logo" />
-      </div>
+      <ButtonGroup variant="contained" size="large">
+        <Button
+          onClick={() => {
+            console.log("running");
+            // console.log("tempalteIdInput", templateIdInput.current?.value);
+            callSendemailAPI(
+              emailInput.current?.value,
+              nameInput.current?.value,
+              templateId
+              // templateIdInput.current?.value
+            ).then((res) => {
+              if (res !== "201") {
+                setEmailStatus("Failed to POST " + res);
+              } else {
+                setEmailStatus("SENT! Post successful " + res);
+              }
+            });
+          }}
+          color="primary"
+          startIcon={<SendIcon />}
+        >
+          SEND
+        </Button>
+        <Button color="secondary" startIcon={<DeleteIcon />}>
+          DISCARD
+        </Button>
+      </ButtonGroup>
+      <div>Email Status: {emailStatus}</div>
     </div>
   );
 }
