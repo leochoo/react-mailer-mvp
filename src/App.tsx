@@ -20,27 +20,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import SendIcon from "@material-ui/icons/Send";
 import axios, { AxiosError } from "axios";
 import { ErrorRounded } from "@material-ui/icons";
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      "& .MuiTextField-root": {
-        // margin: theme.spacing(3),
-        // width: "25ch",
-      },
-    },
-    input: {
-      // color: "#FFFFFF",
-    },
-    formControl: {
-      // margin: theme.spacing(1),
-      // width: "100%",
-    },
-    selectEmpty: {
-      // marginTop: theme.spacing(2),
-    },
-  })
-);
+// import ApplicantRow from "./ApplicantRow";
 
 const callSendemailAPI = async (
   emailField?: String,
@@ -66,8 +46,34 @@ const callSendemailAPI = async (
   }
 };
 
+function applicantRow() {
+  return (
+    <React.Fragment>
+      <Grid xs={12} sm={6} md={6} item>
+        <TextField
+          // inputRef={nameInput}
+          color="primary"
+          label="Applicant Name"
+          placeholder="Applicant Name"
+          variant="outlined"
+          fullWidth
+        ></TextField>
+      </Grid>
+
+      <Grid xs={12} sm={6} md={6} item>
+        {" "}
+        <TextField
+          // inputRef={emailInput}
+          color="primary"
+          label="Applicant Email"
+          variant="outlined"
+          fullWidth
+        ></TextField>
+      </Grid>
+    </React.Fragment>
+  );
+}
 function App() {
-  const classes = useStyles();
   // const [emailField, setEmailField] = useState("Put Your Email");
   // const fromInput = useRef<HTMLInputElement>(null);
   const nameInput = useRef<HTMLInputElement>(null);
@@ -83,40 +89,6 @@ function App() {
   };
 
   useEffect(() => {}, []);
-
-  function ApplicantRow() {
-    return (
-      <React.Fragment>
-        <Grid xs={12} sm={6} md={6} item>
-          <TextField
-            inputRef={nameInput}
-            color="primary"
-            label="Applicant Name"
-            placeholder="Applicant Name"
-            InputProps={{
-              className: classes.input,
-            }}
-            variant="outlined"
-            fullWidth
-          ></TextField>
-        </Grid>
-
-        <Grid xs={12} sm={6} md={6} item>
-          {" "}
-          <TextField
-            inputRef={emailInput}
-            color="primary"
-            label="Applicant Email"
-            InputProps={{
-              className: classes.input,
-            }}
-            variant="outlined"
-            fullWidth
-          ></TextField>
-        </Grid>
-      </React.Fragment>
-    );
-  }
 
   return (
     <div className="App-body">
@@ -169,8 +141,9 @@ function App() {
                 justifyContent="space-between"
                 alignItems="stretch"
               >
-                {/* TODO: Need to dynamically generate this on a need basis */}
-                <ApplicantRow />
+                {/* TODO: Need to dynclamically generate this on a need basis */}
+                {/* <ApplicantRow /> */}
+                ApplicantRow to be added
               </Grid>
             </Grid>
           </CardContent>
