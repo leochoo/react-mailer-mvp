@@ -28,8 +28,8 @@ const App = (): JSX.Element => {
       template: "d-c606695e3a4f430d9755b3fb5b4801bc",
       applicantArray: [
         {
-          name: "",
-          email: "",
+          applicantName: "",
+          applicantEmail: "",
         },
       ],
     },
@@ -42,7 +42,10 @@ const App = (): JSX.Element => {
   });
 
   const handleAppend = () => {
-    append({ name: "appended name", email: "appended email" });
+    append({
+      applicantName: "appended name",
+      applicantEmail: "appended email",
+    });
   };
 
   const handleRemove = () => {
@@ -54,9 +57,8 @@ const App = (): JSX.Element => {
     try {
       const response = await axios.post("http://localhost:5000/send_email", {
         fromEmail: data.from,
-        applicantEmail: data.applicantArray[0].email,
-        applicantName: data.applicantArray[0].name,
         templateId: data.template,
+        applicantArray: data.applicantArray,
       });
       console.log("response:", response);
       return response.status.toString();
@@ -75,8 +77,8 @@ const App = (): JSX.Element => {
     from: string;
     template: string;
     applicantArray: {
-      name: string;
-      email: string;
+      applicantName: string;
+      applicantEmail: string;
     }[];
   }
 
@@ -152,7 +154,7 @@ const App = (): JSX.Element => {
             <Grid xs={12} sm={6} md={6} item>
               <label className={styles.label}>Applicant Name</label>
               <TextField
-                name={`applicantArray[${index}].name`}
+                name={`applicantArray[${index}].applicantName`}
                 inputRef={register()}
                 placeholder="Name"
                 fullWidth
@@ -168,7 +170,7 @@ const App = (): JSX.Element => {
             <Grid xs={12} sm={6} md={6} item>
               <label className={styles.label}>Applicant Email</label>
               <TextField
-                name={`applicantArray[${index}].email`}
+                name={`applicantArray[${index}].applicantEmail`}
                 inputRef={register()}
                 placeholder="Email"
                 fullWidth
