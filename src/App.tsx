@@ -130,21 +130,6 @@ function App() {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid
-                xs={12}
-                sm={12}
-                md={12}
-                container
-                item
-                // spacing={1}
-                direction="row"
-                justifyContent="space-between"
-                alignItems="stretch"
-              >
-                {/* TODO: Need to dynclamically generate this on a need basis */}
-                {/* <ApplicantRow /> */}
-                ApplicantRow to be added
-              </Grid>
             </Grid>
           </CardContent>
         </Card>
