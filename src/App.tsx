@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import ReactDOM from "react-dom";
 // import Select from "react-select";
-import { Link as RouterLink } from "react-router-dom";
+// import { Link as RouterLink } from "react-router-dom";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
 import Input from "@material-ui/core/Input";
 import {
@@ -22,6 +22,9 @@ import axios, { AxiosError } from "axios";
 import useStyles from "./SendEmailPage.styles";
 
 const App = (): JSX.Element => {
+  const [emailStatus, setEmailStatus] = useState("");
+  const [numApplicants, setNumApplicants] = useState(0);
+
   const { control, register, handleSubmit } = useForm({
     defaultValues: {
       from: "leochootest@gmail.com",
@@ -82,8 +85,6 @@ const App = (): JSX.Element => {
     }[];
   }
 
-  const [emailStatus, setEmailStatus] = useState("");
-
   const onSubmit = handleSubmit((data) => {
     callSendemailAPI(data).then((res) => {
       if (res !== "201") {
@@ -93,6 +94,15 @@ const App = (): JSX.Element => {
       }
     });
   });
+
+  useEffect(() => {
+    setNumApplicants(fields.length);
+  }, [fields]);
+
+  //log when numApplicant chnages
+  useEffect(() => {
+    console.log(numApplicants);
+  }, [numApplicants]);
 
   const styles = useStyles();
 
@@ -141,6 +151,20 @@ const App = (): JSX.Element => {
             className={styles.Input}
           />
         </Grid>
+        {
+          // render warning if numApplicant more than 2
+          numApplicants >= 2 && (
+            <Grid xs={12} item>
+              {/* <Alert severity="warning">
+                This is a warning alert — check it out!
+              </Alert> */}
+              <Typography variant="h6" align="center">
+                Warning: ONLY the first email will be sent, if there are two
+                emails sent to the same address.
+              </Typography>
+            </Grid>
+          )
+        }
         {fields.map((field, index) => (
           <Grid
             xs={12}
