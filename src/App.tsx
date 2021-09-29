@@ -16,6 +16,7 @@ import {
   Link,
   Typography,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
 import axios, { AxiosError } from "axios";
@@ -101,7 +102,7 @@ const App = (): JSX.Element => {
 
   //log when numApplicant chnages
   useEffect(() => {
-    console.log(numApplicants);
+    console.log("numApplicants: ", numApplicants);
   }, [numApplicants]);
 
   const styles = useStyles();
@@ -155,13 +156,12 @@ const App = (): JSX.Element => {
           // render warning if numApplicant more than 2
           numApplicants >= 2 && (
             <Grid xs={12} item>
-              {/* <Alert severity="warning">
-                This is a warning alert — check it out!
-              </Alert> */}
-              <Typography variant="h6" align="center">
-                Warning: ONLY the first email will be sent, if there are two
-                emails sent to the same address.
-              </Typography>
+              <Alert severity="warning">
+                <b>同じメールアドレスに複数のメール</b>
+                を送ると、<b>最初のメールだけ</b>送信されます。<br></br>
+                <b>ONLY the first email</b> will be sent, if you send multiple
+                emails to the <b>same address</b>.
+              </Alert>
             </Grid>
           )
         }
