@@ -224,20 +224,23 @@ const App = (): JSX.Element => {
           </Button>
         </Grid>
         <Grid container item justifyContent="center">
-          {
+          {emailStatus !== "" &&
             // if emailstatus successful, display success alert. if not, display
-            emailStatus === "201" ? (
+            (emailStatus === "201" ? (
               <Alert severity="success">
-                `🕊 has successfully delivered the ✉️ to our precious applicants!
-                🥳 ${emailStatus}`
+                Our specially trained delivery bird 🕊 has successfully delivered
+                the mails to our precious applicants! 🥳 <br></br>
+                Status Code: {emailStatus}
               </Alert>
             ) : (
               <Alert severity="error">
-                `Oh no! The mail was not delivered! 😢 Perhaps an 🦅 snatched
-                our mails? Error code: ${emailStatus}`
+                Oh no, something went wrong! 😢 <br></br>
+                Don't worry! Your mails are securely protected by our guards 💂🏼‍♀️
+                until a successful dispatch!
+                <br></br>
+                Error code: {emailStatus}
               </Alert>
-            )
-          }
+            ))}
         </Grid>
       </form>
     </Grid>
