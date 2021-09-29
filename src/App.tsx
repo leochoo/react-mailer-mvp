@@ -88,11 +88,11 @@ const App = (): JSX.Element => {
 
   const onSubmit = handleSubmit((data) => {
     callSendemailAPI(data).then((res) => {
-      if (res !== "201") {
-        setEmailStatus("Failed to POST " + res);
-      } else {
-        setEmailStatus("SENT! Post successful " + res);
+      if (res === undefined) {
+        res = "";
       }
+      console.log(res);
+      setEmailStatus(res);
     });
   });
 
@@ -224,7 +224,20 @@ const App = (): JSX.Element => {
           </Button>
         </Grid>
         <Grid container item justifyContent="center">
-          Email Status: {emailStatus}
+          {
+            // if emailstatus successful, display success alert. if not, display
+            emailStatus === "201" ? (
+              <Alert severity="success">
+                `🕊 has successfully delivered the ✉️ to our precious applicants!
+                🥳 ${emailStatus}`
+              </Alert>
+            ) : (
+              <Alert severity="error">
+                `Oh no! The mail was not delivered! 😢 Perhaps an 🦅 snatched
+                our mails? Error code: ${emailStatus}`
+              </Alert>
+            )
+          }
         </Grid>
       </form>
     </Grid>
