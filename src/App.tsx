@@ -21,6 +21,7 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
 import axios, { AxiosError } from "axios";
 import useStyles from "./SendEmailPage.styles";
+import Confetti from "react-confetti";
 
 const App = (): JSX.Element => {
   const [emailStatus, setEmailStatus] = useState("");
@@ -108,142 +109,145 @@ const App = (): JSX.Element => {
   const styles = useStyles();
 
   return (
-    <Grid container justifyContent="center" spacing={2}>
-      <Grid item></Grid>
-      <Grid item xs={12}>
-        <Typography variant="h3" align="center">
-          Email New Applicants
-        </Typography>
-      </Grid>
-      <form onSubmit={onSubmit} className={styles.form}>
-        <Grid xs={12} item>
-          <label className={styles.label}>FROM</label>
-          <Controller
-            as={
-              <TextField select variant="standard" fullWidth>
-                <MenuItem value={"leochootest@gmail.com"}>
-                  leochootest@gmail.com
-                </MenuItem>
-                <MenuItem value={"leochootest@gmail.com"}>
-                  leochootest@gmail.com
-                </MenuItem>
-              </TextField>
-            }
-            name="from"
-            control={control}
-            className={styles.Input}
-          />
+    <>
+      <Grid container justifyContent="center" spacing={2}>
+        <Grid item></Grid>
+        <Grid item xs={12}>
+          <Typography variant="h3" align="center">
+            Email New Applicants
+          </Typography>
         </Grid>
-        <Grid xs={12} item>
-          <label className={styles.label}>TEMPLATE</label>
-          <Controller
-            as={
-              <TextField select variant="standard" fullWidth>
-                <MenuItem value={"d-c606695e3a4f430d9755b3fb5b4801bc"}>
-                  Wings Template
-                </MenuItem>
-                <MenuItem value={"d-c606695e3a4f430d9755b3fb5b4801bc"}>
-                  Wings Template copy
-                </MenuItem>
-              </TextField>
-            }
-            name="template"
-            control={control}
-            className={styles.Input}
-          />
-        </Grid>
-        {
-          // render warning if numApplicant more than 2
-          numApplicants >= 2 && (
-            <Grid xs={12} item>
-              <Alert severity="warning">
-                <b>同じメールアドレスに複数のメール</b>
-                を送ると、<b>最初のメールだけ</b>送信されます。<br></br>
-                <b>ONLY the first email</b> will be sent, if you send multiple
-                emails to the <b>same address</b>.
-              </Alert>
-            </Grid>
-          )
-        }
-        {fields.map((field, index) => (
-          <Grid
-            xs={12}
-            sm={12}
-            md={12}
-            container
-            item
-            spacing={1}
-            key={field.id}
-          >
-            <Grid xs={12} sm={6} md={6} item>
-              <label className={styles.label}>Applicant Name</label>
-              <TextField
-                name={`applicantArray[${index}].applicantName`}
-                inputRef={register()}
-                placeholder="Name"
-                fullWidth
-              />
-              {/* <Controller
+        <form onSubmit={onSubmit} className={styles.form}>
+          <Grid xs={12} item>
+            <label className={styles.label}>FROM</label>
+            <Controller
+              as={
+                <TextField select variant="standard" fullWidth>
+                  <MenuItem value={"leochootest@gmail.com"}>
+                    leochootest@gmail.com
+                  </MenuItem>
+                  <MenuItem value={"leochootest@gmail.com"}>
+                    leochootest@gmail.com
+                  </MenuItem>
+                </TextField>
+              }
+              name="from"
+              control={control}
+              className={styles.Input}
+            />
+          </Grid>
+          <Grid xs={12} item>
+            <label className={styles.label}>TEMPLATE</label>
+            <Controller
+              as={
+                <TextField select variant="standard" fullWidth>
+                  <MenuItem value={"d-c606695e3a4f430d9755b3fb5b4801bc"}>
+                    Wings Template
+                  </MenuItem>
+                  <MenuItem value={"d-c606695e3a4f430d9755b3fb5b4801bc"}>
+                    Wings Template copy
+                  </MenuItem>
+                </TextField>
+              }
+              name="template"
+              control={control}
+              className={styles.Input}
+            />
+          </Grid>
+          {
+            // render warning if numApplicant more than 2
+            numApplicants >= 2 && (
+              <Grid xs={12} item>
+                <Alert severity="warning">
+                  <b>同じメールアドレスに複数のメール</b>
+                  を送ると、<b>最初のメールだけ</b>送信されます。<br></br>
+                  <b>ONLY the first email</b> will be sent, if you send multiple
+                  emails to the <b>same address</b>.
+                </Alert>
+              </Grid>
+            )
+          }
+          {fields.map((field, index) => (
+            <Grid
+              xs={12}
+              sm={12}
+              md={12}
+              container
+              item
+              spacing={1}
+              key={field.id}
+            >
+              <Grid xs={12} sm={6} md={6} item>
+                <label className={styles.label}>Applicant Name</label>
+                <TextField
+                  name={`applicantArray[${index}].applicantName`}
+                  inputRef={register()}
+                  placeholder="Name"
+                  fullWidth
+                />
+                {/* <Controller
                 as={Input}
                 name={`applicantArray[${index}].name`}
                 control={control}
                 defaultValue=""
                 className={styles.Input}
               /> */}
-            </Grid>
-            <Grid xs={12} sm={6} md={6} item>
-              <label className={styles.label}>Applicant Email</label>
-              <TextField
-                name={`applicantArray[${index}].applicantEmail`}
-                inputRef={register()}
-                placeholder="Email"
-                fullWidth
-              />
-              {/* <Controller
+              </Grid>
+              <Grid xs={12} sm={6} md={6} item>
+                <label className={styles.label}>Applicant Email</label>
+                <TextField
+                  name={`applicantArray[${index}].applicantEmail`}
+                  inputRef={register()}
+                  placeholder="Email"
+                  fullWidth
+                />
+                {/* <Controller
                 as={Input}
                 name={`applicantArray[${index}].email`}
                 control={control}
                 defaultValue=""
                 className={styles.Input}
               /> */}
+              </Grid>
             </Grid>
-          </Grid>
-        ))}
+          ))}
 
-        <Grid container item justifyContent="center">
-          <IconButton onClick={handleAppend} data-testid="append-button">
-            <AddCircleOutlineIcon fontSize="large" />
-          </IconButton>
-          <IconButton onClick={handleRemove} data-testid="remove-button">
-            <RemoveCircleOutlineIcon fontSize="large" />
-          </IconButton>
-        </Grid>
-        <Grid container item justifyContent="center">
-          <Button type="submit" variant="contained" color="secondary">
-            SUBMIT
-          </Button>
-        </Grid>
-        <Grid container item justifyContent="center">
-          {emailStatus !== "" &&
-            // if emailstatus successful, display success alert. if not, display
-            (emailStatus === "201" ? (
-              <Alert severity="success">
-                Our specially trained delivery bird 🕊 has successfully delivered
-                the mails to our precious applicants! 🥳 <br></br>
-                Status Code: {emailStatus}
-              </Alert>
-            ) : (
-              <Alert severity="error">
-                Oh no, something went wrong! 😢 <br></br>
-                Don't worry! Your mails are securely protected by our guards 💂🏼‍♀️
-                until a successful dispatch!
-                <br></br>
-                Error code: {emailStatus}
-              </Alert>
-            ))}
-        </Grid>
-      </form>
-    </Grid>
+          <Grid container item justifyContent="center">
+            <IconButton onClick={handleAppend} data-testid="append-button">
+              <AddCircleOutlineIcon fontSize="large" />
+            </IconButton>
+            <IconButton onClick={handleRemove} data-testid="remove-button">
+              <RemoveCircleOutlineIcon fontSize="large" />
+            </IconButton>
+          </Grid>
+          <Grid container item justifyContent="center">
+            <Button type="submit" variant="contained" color="secondary">
+              SUBMIT
+            </Button>
+          </Grid>
+          <Grid container item justifyContent="center">
+            {emailStatus !== "" &&
+              // if emailstatus successful, display success alert. if not, display
+              (emailStatus === "201" ? (
+                <Alert severity="success">
+                  Our specially trained delivery bird 🕊 has successfully
+                  delivered the mails to our precious applicants! 🥳 <br></br>
+                  Status Code: {emailStatus}
+                </Alert>
+              ) : (
+                <Alert severity="error">
+                  Oh no, something went wrong! 😢 <br></br>
+                  Don't worry! Your mails are securely protected by our guards
+                  💂🏼‍♀️ until a successful dispatch!
+                  <br></br>
+                  Error code: {emailStatus}
+                </Alert>
+              ))}
+          </Grid>
+        </form>
+      </Grid>
+      {emailStatus === "201" && <Confetti />}
+    </>
   );
 };
 

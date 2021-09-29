@@ -3,10 +3,9 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     form: {
-      width: "100%",
+      width: "80%",
       maxWidth: "800px",
       margin: "0 auto",
-      //   border: "1px solid red",
       marginBottom: "400px",
     },
     Input: {
